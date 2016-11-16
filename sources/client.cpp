@@ -10,35 +10,38 @@ namespace Instagram{
 	auto Client::check_connection() -> bool {
 		
         std::string json_data;
-		CURL* EasyCurl = curl_easy_init();
+	CURL* EasyCurl = curl_easy_init();
 
-		curl_easy_setopt(EasyCurl, CURLOPT_URL, "https://api.instagram.com/v1/users/self/?access_token=");
-		curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
-//		curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, "&callback=CallbackFunction");
+	curl_easy_setopt(EasyCurl, CURLOPT_URL, "https://api.instagram.com/v1/users/self/?access_token=");
+	curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
+//	curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, "&callback=CallbackFunction");
         curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, Client::CallbackFunction);
         curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
         //std::cout << json_data <<std::endl ;
-		if  (curl_easy_perform(EasyCurl) == CURLE_OK && json_data != "") {
+	
+	if  (curl_easy_perform(EasyCurl) == CURLE_OK && json_data != "") {
        
-           json user_inf = json::parse(json_data);
-           curl_easy_cleanup(EasyCurl);
+        	json user_inf = json::parse(json_data);
+           	curl_easy_cleanup(EasyCurl);
         
-           if (user_inf["meta"]["code"] == "200") 
-                return true;
-           else return false; 
-		}
+           	if (user_inf["meta"]["code"] == "200") 
+                	return true;
+           	else return false; 
+	}
     
 
     	curl_easy_cleanup(EasyCurl);
         return false;
 	} 
 
+	
+	
 	auto Client::get_most_popular_photo() -> std::string {
         std::string json_data;
         CURL* EasyCurl = curl_easy_init();
 
-		curl_easy_setopt(EasyCurl, CURLOPT_URL, "https://api.instagram.com/v1/users/self/follows?access_token=");
-		curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
+	curl_easy_setopt(EasyCurl, CURLOPT_URL, "https://api.instagram.com/v1/users/self/follows?access_token=");
+	curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
         curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, Client::CallbackFunction);
         curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
 		

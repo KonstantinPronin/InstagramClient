@@ -9,7 +9,7 @@ namespace Instagram{
 		auto check_connection() -> bool;	
 		auto get_most_popular_photo() -> std::string;
 	    	static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, std::string *userdata) -> size_t;
-    private:
+   	private:
 		dict_t _settings;
 	};
 

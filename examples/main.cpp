@@ -13,6 +13,7 @@ int main (){
 	
 	settings.insert(std::pair<std::string, std::string> ("acces_token", token));
     	Instagram::Client Example(settings);
-    	std:: cout <<  Example.check_connection();
+    	std::cout << Example.check_connection();
+	std::cout << Examples.get_most_popular_photo();
 	return 0;
 }

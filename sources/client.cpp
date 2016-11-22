@@ -14,10 +14,9 @@ namespace Instagram{
 
 		curl_easy_setopt(EasyCurl, CURLOPT_URL, "https://api.instagram.com/v1/users/self/?access_token=");
 		curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
-		//curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, "&callback=CallbackFunction");
         	curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, Client::CallbackFunction);
         	curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
-        	//std::cout << json_data <<std::endl ;
+     
 	
 		if  (curl_easy_perform(EasyCurl) == CURLE_OK && json_data != "") {
        
@@ -58,11 +57,10 @@ namespace Instagram{
         	}
 	}
 
-    	auto Client::CallbackFunction(char *ptr, size_t size, size_t nmemb, std::string *userdata) -> size_t{
+    	auto Client::CallbackFunction(char *ptr, size_t size, size_t nmemb, char *userdata) -> size_t{
         	size_t realsize = size * nmemb;
         	std::cout << realsize << std::endl;
-        	//((std::string*) userdata) -> append(ptr, 0, realsize + 1 );
-        	*userdata += *ptr;
-        	return realsize;
+        	((std::string*) userdata) -> append(ptr, 0, realsize + 1 );
+         	return realsize;
     	}
 }

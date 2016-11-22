@@ -8,7 +8,7 @@ namespace Instagram{
 		Client(dict_t  settings) : _settings(settings){}
 		auto check_connection() -> bool;	
 		auto get_most_popular_photo() -> std::string;
-	    	static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, std::string *userdata) -> size_t;
+	    	static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, char *userdata) -> size_t;
    	private:
 		dict_t _settings;
 	};

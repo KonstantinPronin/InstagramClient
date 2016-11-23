@@ -16,9 +16,10 @@ namespace Instagram{
 		curl_easy_setopt(EasyCurl, CURLOPT_POSTFIELDS, _settings["access_token"]);
         	curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, Client::CallbackFunction);
         	curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
+		auto perform_result = curl_easy_perform(EasyCurl);
      
 	
-		if  (curl_easy_perform(EasyCurl) == CURLE_OK && json_data != "") {
+		if  (perform_result == CURLE_OK && json_data != "") {
        
         		json user_inf = json::parse(json_data);
            		curl_easy_cleanup(EasyCurl);

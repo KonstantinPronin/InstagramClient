@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 2.8.7)
 
 #set(SERVICE "Instagram")
 
@@ -21,10 +21,19 @@ find_package(CURL REQUIRED)
 find_package(Threads REQUIRED)
 include_directories(${CURL_INCLUDE_DIR})
 
+if(THREADS_HAVE_PTHREAD_ARG)
+	set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_OPTIONS "-pthread")
+	set_property(TARGET ${PROJECT_NAME} PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
+endif()
+
+if(CMAKE_THREAD_LIBS_INIT)
+	target_link_libraries(${PROJECT_NAME} "${CMAKE_THREAD_LIBS_INIT}")
+endif()
+
 if(UNIX)
-set(DEPENDS_LIBRARIES ${OPENSSL_LIBRARIES} ${CURL_LIBRARY})
+	set(DEPENDS_LIBRARIES ${OPENSSL_LIBRARIES} ${CURL_LIBRARY} ${Boost_LIBRARIES})
 elseif(MSVC)
-set(DEPENDS_LIBRARIES ${OPENSSL_LIBRARIES} ${CURL_LIBRARY} ws2_32)
+	set(DEPENDS_LIBRARIES ${OPENSSL_LIBRARIES} ${CURL_LIBRARY} ${Boost_LIBRARIES} ws2_32)
 endif()
 
 add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR}/examples/main.cpp)
@@ -32,9 +41,9 @@ add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR}/examples/main.cpp)
 target_link_libraries(Examples ${PROJECT_NAME} ${DEPENDS_LIBRARIES})
 
 if(BUILD_TESTS)
-    enable_testing()
-    file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
-    add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
-    target_link_libraries(check ${PROJECT_NAME} ${DEPENDS_LIBRARIES})
-    add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+	enable_testing()
+	file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
+	add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
+	target_link_libraries(check ${PROJECT_NAME} ${DEPENDS_LIBRARIES})
+	add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes")
 endif()

@@ -111,18 +111,15 @@ namespace Instagram {
 		std::vector<std::thread> threads(num_of_threads);
 		size_t follower_index = 0;
 
-	again:
-		{
+		while (follower_index < followers_.size() - 1){
+
 			for (size_t i = 0; i < num_of_threads; follower_index++, i++) {
 				if (follower_index >= followers_.size()) break;
 				threads[i] = std::thread(print_followers, flag, follower_index);
 			}
 
-
 			std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 		}
-
-		if (follower_index < followers_.size() - 1) goto again;
 		
 	}
 }

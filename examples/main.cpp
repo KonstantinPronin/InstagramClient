@@ -9,15 +9,15 @@ int main() {
 		<< std::endl << "Enter your access_token: ";
 
 		std::string token;
-		std::cin >> token;
+		if (!(std::cin >> token)) throw std::logic_error("wrong format of access_token");
 	
 		settings.insert(std::pair<std::string, std::string>("access_token", token));
-		Instagram::Client Example(settings);
+		Instagram::Client example(settings);
 
 
 		std::vector<std::string> v{ "avram", "nikol", "micki", "zlatan", "citrus", "cipher" };
 		for (size_t i = 0; i < 6; i++) {
-			Example.push_followers_cause_my_program_doesnt_work(v[i], i);
+			example.push_followers_cause_my_program_doesnt_work(v[i], i);
 		}
 		
 		
@@ -26,11 +26,11 @@ int main() {
 			std::cin.ignore();
 			std::cout << "> ";
 			std::string command;
-			std::getline(std::cin, command);
+			if(!std::getline(std::cin, command)) break;
 			std::cout << std::endl;
 
-			if (command == "./get_followers") Example.threads_run(false);
-			else if (command == "./get_followers -v") Example.threads_run(true);
+			if (command == "./get_followers") example.threads_run(false);
+			else if (command == "./get_followers -v") example.threads_run(true);
 			else if (command == "./q") break;
 			else std::cout << "Wrong command, try again.\n";
 

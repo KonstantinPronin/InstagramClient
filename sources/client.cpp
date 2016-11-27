@@ -78,14 +78,17 @@ namespace Instagram {
 		
 		std::unique_lock<std::mutex> m_lock(client_mutex);
 		
-		if (flag) std::cout << "Thread_ID: " << std::this_thread::get_id() << std::endl;
-		std::time_t start_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		if (flag) std::cout << "Start time: " << ctime(&start_time);
+		if (flag) {
+			std::time_t start_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+			std::cout << "Thread_ID: " << std::this_thread::get_id() << std::endl << "Start time: " << ctime(&start_time);
+		}
 
 		followers_[i].PrintMe();
 		
-		std::time_t end_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		if (flag) std::cout << "End time: " << ctime(&end_time) << std::endl;
+		if (flag) {
+			std::time_t end_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+			std::cout << "End time: " << ctime(&end_time) << std::endl;
+		}
 	}
 
 	
@@ -96,7 +99,8 @@ namespace Instagram {
 
 		std::cout << "Enter number of threads: ";
 		int n;
-		std::cin >> n;
+		if (!(std::cin >> n)) return;
+		
 		if (n > followers_.size())
 			n = followers_.size();
 

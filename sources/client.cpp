@@ -95,7 +95,7 @@ namespace Instagram {
 	auto Client::threads_run(const bool& flag) -> void {
 		
 		if (followers_.empty()) throw std::logic_error("There is no followers");
-		const int hardware_threads = std::thread::hardware_concurrency() - 1;
+		const unsigned int hardware_threads = std::thread::hardware_concurrency() - 1;
 
 		std::cout << "Enter number of threads: ";
 		int n;
@@ -106,19 +106,19 @@ namespace Instagram {
 
 		if (n < 1) throw std::logic_error("Number must be more than 0");
 
-		const size_t num_of_threads = (std::min)(hardware_threads != 0 ? hardware_threads : 1, n);
+		const unsigned int num_of_threads = (std::min)(hardware_threads != 0 ? hardware_threads : 1, n);
 
 		std::vector<std::thread> threads(num_of_threads);
 		size_t follower_index = 0;
 
 		while (follower_index < followers_.size() - 1){
 
-			for (size_t i = 0; i < num_of_threads; ++follower_index, ++i) {
+			for (unsigned int i = 0; i < num_of_threads; ++follower_index, ++i) {
 				if (follower_index >= followers_.size()) break;
 				threads[i] = std::thread(print_followers, flag, follower_index);
 			}
 
-			for (size_t i = 0; i < num_of_threads; ++i) {
+			for (unsigned int i = 0; i < num_of_threads; ++i) {
 				if (threads[i].joinable()) threads[i].join();
 			}
 		}

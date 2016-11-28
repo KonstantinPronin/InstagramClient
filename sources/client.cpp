@@ -74,7 +74,7 @@ namespace Instagram {
 	}
 	
 
-	auto Client::print_followers(const bool& flag, size_t i) -> void{
+	auto Client::print_followers(bool flag, size_t i) -> void{
 		
 		std::unique_lock<std::mutex> m_lock(client_mutex);
 		
@@ -118,7 +118,9 @@ namespace Instagram {
 				threads[i] = std::thread(print_followers, flag, follower_index);
 			}
 
-			std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
+			for (size_t i = 0; i < num_of_threads; ++i) {
+				if (threads[i].joinable()) threads[i].join();
+			}
 		}
 		
 	}

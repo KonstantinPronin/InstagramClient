@@ -95,7 +95,7 @@ namespace Instagram {
 	auto Client::threads_run(const bool& flag) -> void {
 		
 		if (followers_.empty()) throw std::logic_error("There is no followers");
-		const unsigned int hardware_threads = std::thread::hardware_concurrency() - 1;
+		const int hardware_threads = std::thread::hardware_concurrency() - 1;
 
 		std::cout << "Enter number of threads: ";
 		int n;

@@ -39,7 +39,7 @@ namespace Instagram {
 		auto threads_run(const bool&) -> void;
 		auto push_followers_cause_my_program_doesnt_work(const std::string&, const size_t&) -> void;
 
-		static auto print_followers(const bool&, size_t) -> void;
+		static auto print_followers(bool, size_t) -> void;
 		//static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, char *userdata) -> size_t;
 	private:
 		dict_t settings_;

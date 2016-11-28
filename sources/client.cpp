@@ -83,7 +83,7 @@ namespace Instagram {
 			std::cout << "Thread_ID: " << std::this_thread::get_id() << std::endl << "Start time: " << ctime(&start_time);
 		}
 
-		followers_[i].PrintMe();
+		std::cout << followers_[i];
 		
 		if (flag) {
 			std::time_t end_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -113,7 +113,7 @@ namespace Instagram {
 
 		while (follower_index < followers_.size() - 1){
 
-			for (size_t i = 0; i < num_of_threads; follower_index++, i++) {
+			for (size_t i = 0; i < num_of_threads; ++follower_index, ++i) {
 				if (follower_index >= followers_.size()) break;
 				threads[i] = std::thread(print_followers, flag, follower_index);
 			}
@@ -123,5 +123,12 @@ namespace Instagram {
 			}
 		}
 		
+	}
+	
+	std::ostream & operator<<(std::ostream & out, const Follower& usr)
+	{
+		out << "Nickname: " << usr.nickname_ << '\n'
+			<< "Number of publications: " << usr.num_of_publications_ << '\n';
+		return out;
 	}
 }

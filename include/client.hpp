@@ -19,11 +19,7 @@ namespace Instagram {
 		size_t num_of_publications_;
 	public:
 		Follower(std::string name, size_t num) : nickname_(name), num_of_publications_(num) {}
-		void PrintMe() {
-			std::cout << "Nickname: " << nickname_ << std::endl
-				<< "Number of publications: " << num_of_publications_ << std::endl;
-		}
-
+		friend std::ostream& operator << (std::ostream&, const Follower&);
 	};
 
 

@@ -14,19 +14,19 @@ namespace Instagram {
 
 		if (!EasyCurl) throw std::logic_error(" sth wrong with easy init ");
         
-        std::string url =  "https://api.instagram.com/v1/users/self/?access_token=" + settings_["access_token"];
+       		std::string url =  "https://api.instagram.com/v1/users/self/?access_token=" + settings_["access_token"];
         
-        curl_easy_setopt(EasyCurl, CURLOPT_URL, url.c_str());		
+        	curl_easy_setopt(EasyCurl, CURLOPT_URL, url.c_str());		
 		curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, CallbackFunction);
 		curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
 	
 		auto perform_result = curl_easy_perform(EasyCurl);
 		
-        if (perform_result == CURLE_OK && !json_data.empty()) {
+        	if (perform_result == CURLE_OK && !json_data.empty()) {
 			json user_inf = json::parse(json_data);
 			curl_easy_cleanup(EasyCurl);
 		    
-            if (user_inf["meta"]["code"].dump() == "200")
+            		if (user_inf["meta"]["code"].dump() == "200")
 				return true;
 			else return false;
 		}
@@ -41,9 +41,9 @@ namespace Instagram {
 		std::string json_data;
 		CURL* EasyCurl = curl_easy_init();
 
-        std::string url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + settings_["access_token"];
+        	std::string url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + settings_["access_token"];
         
-        curl_easy_setopt(EasyCurl, CURLOPT_URL, url.c_str());		
+        	curl_easy_setopt(EasyCurl, CURLOPT_URL, url.c_str());		
 		curl_easy_setopt(EasyCurl, CURLOPT_WRITEFUNCTION, CallbackFunction);
 		curl_easy_setopt(EasyCurl, CURLOPT_WRITEDATA, &json_data);
 
@@ -54,7 +54,7 @@ namespace Instagram {
 
 			curl_easy_cleanup(EasyCurl);
 
-	    	return link_to_photo.dump();
+	    		return link_to_photo.dump();
 		}
 		else {
 			curl_easy_cleanup(EasyCurl);
@@ -66,9 +66,9 @@ namespace Instagram {
 	auto Client::CallbackFunction(char* ptr, size_t size, size_t nmemb, std::string* userdata) -> size_t {
 		size_t realsize = size * nmemb;
 		
-        userdata -> append(ptr, 0, realsize);
+        	userdata -> append(ptr, 0, realsize);
 		
-        return realsize;
+        	return realsize;
 	}
 
 	auto Client::push_followers_cause_my_program_doesnt_work(const std::string& name, const size_t& n) -> void {

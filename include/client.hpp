@@ -30,13 +30,13 @@ namespace Instagram {
 		Client(dict_t  settings) : settings_(settings) {}
 		~Client() { std::cout << "d_tor" << std::endl; }
 		
-		//auto check_connection() -> bool;
-		//auto get_most_popular_photo() -> std::string;
+		auto check_connection() -> bool;
+		auto get_most_popular_photo() -> std::string;
 		auto threads_run(const bool&) -> void;
 		auto push_followers_cause_my_program_doesnt_work(const std::string&, const size_t&) -> void;
 
 		static auto print_followers(bool, size_t) -> void;
-		//static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, char *userdata) -> size_t;
+		static auto CallbackFunction(char *ptr, size_t size, size_t nmemb, std::string *userdata) -> size_t;
 	private:
 		dict_t settings_;
 

@@ -13,11 +13,11 @@ int main() {
 	
 		settings.insert(std::pair<std::string, std::string>("access_token", token));
 		
-        Instagram::Client example(settings);
+        	Instagram::Client example(settings);
 		std::cout << "Result of connection: "  << example.check_connection() << std::endl;
-        std::cout << "Most popular photo: " << example.get_most_popular_photo() << std::endl;
+        	std::cout << "Most popular photo: " << example.get_most_popular_photo() << std::endl;
 		
-        std::vector<std::string> v{ "avram", "nikol", "micki", "zlatan", "citrus", "cipher" };
+        	std::vector<std::string> v{ "avram", "nikol", "micki", "zlatan", "citrus", "cipher" };
 		for (size_t i = 0; i < 6; i++) {
 			example.push_followers_cause_my_program_doesnt_work(v[i], i);
 		}
